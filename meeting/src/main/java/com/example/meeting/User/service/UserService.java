@@ -1,10 +1,12 @@
 package com.example.meeting.User.service;
 
 
+import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.SignInDto;
 import com.example.meeting.User.domain.Role;
 import com.example.meeting.User.domain.User;
 import com.example.meeting.User.repository.UserRepository;
+import com.example.meeting.Room.repository.RoomRepository;
 import com.example.meeting.User.Dto.UserDto;
 import com.example.meeting.common.Jwt.Dto.TokenDto;
 import com.example.meeting.common.Jwt.JwtProvider;
@@ -15,10 +17,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
 
     private final JwtProvider jwtProvider;
 
@@ -46,6 +51,10 @@ public class UserService {
         return jwtProvider.createToken(user.getUserEmail());
     }
 
+    public List<Room> findAllUserRooms(String token) throws Exception {
+        String userEmail = jwtProvider.getUserEmail(token);
+        return roomRepository.findRoomsByUserUserEmail(userEmail);
+    }
     public String findUser(String token) throws  Exception{
         return jwtProvider.getUserEmail(token);
     }

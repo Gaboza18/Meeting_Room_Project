@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -58,6 +60,12 @@ public class UserController {
    public ResponseEntity<ResponseResult<String>> TestTokenController(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
        return ResponseEntity.ok()
                .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUser(userService.resolveToken(userToken))));
+   }
+
+   @GetMapping("/rooms")
+    public ResponseEntity<ResponseResult<List>> getAllUserRooms(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
+        return ResponseEntity.ok()
+                .body(new ResponseResult<>(HttpStatus.OK.value(), userService.findAllUserRooms(userService.resolveToken(userToken))));
    }
 
 }
