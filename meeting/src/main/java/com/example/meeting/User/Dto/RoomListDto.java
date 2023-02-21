@@ -15,7 +15,7 @@ public class RoomListDto {
 
     private UUID uuid;
 
-    private String room_name;
+    private String class_name;
 
     private Date  created_at;
 

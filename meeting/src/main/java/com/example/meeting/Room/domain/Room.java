@@ -25,6 +25,9 @@ public class Room {
     @Column(name = "room_name")
     private String room_name;
 
+    @Column(name = "interviewer")
+    private String interviewer_email;
+
     @Column(name = "target_user")
     private String target_user_email;
 
