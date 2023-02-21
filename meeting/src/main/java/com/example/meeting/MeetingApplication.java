@@ -10,4 +10,5 @@ public class MeetingApplication {
 		SpringApplication.run(MeetingApplication.class, args);
 	}
 
+	// test !
 }
