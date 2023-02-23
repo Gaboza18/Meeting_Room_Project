@@ -1,8 +1,11 @@
 package com.example.meeting.User.domain;
 
 import com.example.meeting.Document.domain.Document;
+import com.example.meeting.Room.Dto.RoomDto;
 import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,9 +36,9 @@ public class User {
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Document> documentList = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL  , orphanRemoval = true)
-    private List<Room> roomList = new ArrayList<>();
+//    @Builder.Default
+//    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL  , orphanRemoval = true)
+//    private List<Room> roomList = new ArrayList<>();
 
     public static User createUser(UserDto newUserDto) {
         return User.builder()

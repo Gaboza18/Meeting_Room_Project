@@ -1,5 +1,6 @@
 package com.example.meeting.Room.repository;
 
+import com.example.meeting.Room.Dto.RoomDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ public interface RoomRepository extends JpaRepository<Room, UUID> {
     //List<Room> findRoomsByTargetUser(@Param("target_user") String target_user_email);
 
     //List<Room> getAllUserRooms(@Param("user_email") String user_email );
-    List<Room> findRoomsByUserUserEmail(@Param("user_email") String user_email );
+    List<Room> findRoomByUserUserEmail(@Param("target_user") String target_user );
 
 }
 

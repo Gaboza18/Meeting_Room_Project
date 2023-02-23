@@ -1,6 +1,7 @@
 package com.example.meeting.User.service;
 
 
+import com.example.meeting.Room.Dto.RoomDto;
 import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.SignInDto;
 import com.example.meeting.User.domain.Role;
@@ -14,15 +15,23 @@ import com.example.meeting.common.Jwt.JwtString;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
+
     private final RoomRepository roomRepository;
 
     private final JwtProvider jwtProvider;
@@ -51,10 +60,25 @@ public class UserService {
         return jwtProvider.createToken(user.getUserEmail());
     }
 
-    public List<Room> findAllUserRooms(String token) throws Exception {
-        String userEmail = jwtProvider.getUserEmail(token);
-        return roomRepository.findRoomsByUserUserEmail(userEmail);
+    public String findAllUserRooms(String token) throws Exception {
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+        String user_uuid = jwtProvider.getUserEmail(token);
+
+        List<Room> rooms = roomRepository.findRoomByUserUserEmail(user_uuid);
+
+
+        List<RoomDto> roomDtos = new ArrayList<>();
+
+        for (Room room : rooms){
+            RoomDto roomdto = new RoomDto(room);
+            roomDtos.add(roomdto);
+        }
+        String json = ow.writeValueAsString(roomDtos);
+        return json;
     }
+
     public String findUser(String token) throws  Exception{
         return jwtProvider.getUserEmail(token);
     }

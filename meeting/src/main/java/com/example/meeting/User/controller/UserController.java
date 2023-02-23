@@ -1,13 +1,12 @@
 package com.example.meeting.User.controller;
 
 
+import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.MainHomeDto;
 import com.example.meeting.User.Dto.SignInDto;
-import com.example.meeting.User.Dto.UserDto;
 import com.example.meeting.User.service.UserService;
 
 import com.example.meeting.common.Jwt.Dto.TokenDto;
-import com.example.meeting.common.Jwt.JwtFilter;
 import com.example.meeting.common.Jwt.JwtProvider;
 import com.example.meeting.common.Jwt.JwtString;
 import com.example.meeting.common.ResponseResult;
@@ -63,7 +62,7 @@ public class UserController {
    }
 
    @GetMapping("/rooms")
-    public ResponseEntity<ResponseResult<List>> getAllUserRooms(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
+    public ResponseEntity<ResponseResult<String>> getAllUserRooms(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
         return ResponseEntity.ok()
                 .body(new ResponseResult<>(HttpStatus.OK.value(), userService.findAllUserRooms(userService.resolveToken(userToken))));
    }
