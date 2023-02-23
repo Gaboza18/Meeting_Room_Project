@@ -58,7 +58,7 @@ public class UserController {
    @GetMapping("/test")
    public ResponseEntity<ResponseResult<String>> TestTokenController(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
        return ResponseEntity.ok()
-               .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUser(userService.resolveToken(userToken))));
+               .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUserEmail(userToken)));
    }
 
    @GetMapping("/rooms")

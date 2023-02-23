@@ -18,6 +18,7 @@ public class RoomDto {
     private String class_name;
     private Timestamp create_at;
     private Progress progress;
+
     public RoomDto(Room room){
         this.uuid = room.getUuid();
         this.class_name = room.getRoom_name();

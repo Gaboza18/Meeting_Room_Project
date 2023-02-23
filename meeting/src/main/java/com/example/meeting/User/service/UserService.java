@@ -3,6 +3,7 @@ package com.example.meeting.User.service;
 
 import com.example.meeting.Room.Dto.RoomDto;
 import com.example.meeting.Room.domain.Room;
+import com.example.meeting.User.Dto.RoomListDto;
 import com.example.meeting.User.Dto.SignInDto;
 import com.example.meeting.User.domain.Role;
 import com.example.meeting.User.domain.User;
@@ -11,17 +12,15 @@ import com.example.meeting.Room.repository.RoomRepository;
 import com.example.meeting.User.Dto.UserDto;
 import com.example.meeting.common.Jwt.Dto.TokenDto;
 import com.example.meeting.common.Jwt.JwtProvider;
-import com.example.meeting.common.Jwt.JwtString;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -60,27 +59,46 @@ public class UserService {
         return jwtProvider.createToken(user.getUserEmail());
     }
 
+    public User getUserByEmail(String email) throws Exception {
+        User user = userRepository.findUserByUserEmail(email);
+        return user;
+
+    }
     public String findAllUserRooms(String token) throws Exception {
 
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter(); // JSON 변환 하기 위한 객체 선언
 
-        String user_uuid = jwtProvider.getUserEmail(token);
+        //String user_uuid = jwtProvider.getUserEmail(token);
+        String userEmail = jwtProvider.getUserEmail(token);
+        User user = getUserByEmail(userEmail);
 
-        List<Room> rooms = roomRepository.findRoomByUserUserEmail(user_uuid);
+        List<Room> rooms = roomRepository.findRoomByUserUserEmail(userEmail);
 
 
         List<RoomDto> roomDtos = new ArrayList<>();
+
 
         for (Room room : rooms){
             RoomDto roomdto = new RoomDto(room);
             roomDtos.add(roomdto);
         }
-        String json = ow.writeValueAsString(roomDtos);
+
+        RoomListDto roomListDto = new RoomListDto(user.getUserEmail(),user.getRole(),roomDtos );
+
+        String json = ow.writeValueAsString(roomListDto);
+
         return json;
     }
 
-    public String findUser(String token) throws  Exception{
-        return jwtProvider.getUserEmail(token);
+    public User findUser(String token) throws  Exception{
+        //return jwtProvider.getUserEmail(token);
+        String userEmail= jwtProvider.getUserEmail(token);
+        return this.getUserByEmail(userEmail);
+    }
+
+
+    public String findUserEmail(String token){
+        return jwtProvider.getUserEmail(resolveToken(token));
     }
 
     public String resolveToken(String bearerToken) {
@@ -89,4 +107,7 @@ public class UserService {
         }
         return null;
     }
+
+ //   public String findUserEmail(String userToken) {
+ //   }
 }
