@@ -12,7 +12,6 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Getter
 @Builder
@@ -35,9 +34,9 @@ public class User {
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Document> documentList = new ArrayList<>();
 
-//    @Builder.Default
-//    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL  , orphanRemoval = true)
-//    private List<Room> roomList = new ArrayList<>();
+/*    @Builder.Default
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL  , orphanRemoval = true)
+    private List<Room> roomList = new ArrayList<>();*/
 
     public static User createUser(UserDto newUserDto) {
         return User.builder()
