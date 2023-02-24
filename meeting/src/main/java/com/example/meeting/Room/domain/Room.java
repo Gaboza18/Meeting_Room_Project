@@ -46,9 +46,9 @@ public class Room {
     @Column(name = "created_at")
     private Timestamp created_at;
 
-//    @Builder.Default
-//    @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL , fetch = FetchType.LAZY , orphanRemoval = true)
-//    private ArrayList<Report> reports = new ArrayList<>();
+/*    @Builder.Default
+    @OneToMany(mappedBy = "room" , cascade = CascadeType.ALL , fetch = FetchType.LAZY , orphanRemoval = true)
+    private ArrayList<Report> reports = new ArrayList<>();*/
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid")

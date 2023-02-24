@@ -1,6 +1,5 @@
 package com.example.meeting.User.service;
 
-
 import com.example.meeting.Room.Dto.RoomDto;
 import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.RoomListDto;
@@ -20,19 +19,15 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
-
     private final RoomRepository roomRepository;
-
     private final JwtProvider jwtProvider;
 
     @Transactional
