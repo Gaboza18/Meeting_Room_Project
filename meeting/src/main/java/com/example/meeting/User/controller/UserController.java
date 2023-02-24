@@ -1,20 +1,22 @@
 package com.example.meeting.User.controller;
 
 
+import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.MainHomeDto;
 import com.example.meeting.User.Dto.SignInDto;
-import com.example.meeting.User.Dto.UserDto;
 import com.example.meeting.User.service.UserService;
 
 import com.example.meeting.common.Jwt.Dto.TokenDto;
-import com.example.meeting.common.Jwt.JwtFilter;
 import com.example.meeting.common.Jwt.JwtProvider;
+import com.example.meeting.common.Jwt.JwtString;
 import com.example.meeting.common.ResponseResult;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -56,7 +58,13 @@ public class UserController {
    @GetMapping("/test")
    public ResponseEntity<ResponseResult<String>> TestTokenController(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
        return ResponseEntity.ok()
-               .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUser(userService.resolveToken(userToken))));
+               .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUserEmail(userToken)));
+   }
+
+   @GetMapping("/rooms")
+    public ResponseEntity<ResponseResult<String>> getAllUserRooms(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
+        return ResponseEntity.ok()
+                .body(new ResponseResult<>(HttpStatus.OK.value(), userService.findAllUserRooms(userService.resolveToken(userToken))));
    }
 
 }

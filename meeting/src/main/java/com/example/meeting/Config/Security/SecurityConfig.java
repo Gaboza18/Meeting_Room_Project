@@ -32,7 +32,7 @@ public class SecurityConfig  {
                 .authorizeRequests()
                 .requestMatchers("/user/made" ).permitAll()
                 .requestMatchers( "/**" ).permitAll()
-                .anyRequest().authenticated
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();

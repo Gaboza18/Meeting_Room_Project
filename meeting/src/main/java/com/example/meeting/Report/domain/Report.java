@@ -45,7 +45,8 @@ public class Report {
     @OneToMany(mappedBy = "report" , cascade = CascadeType.ALL, orphanRemoval = true)
     private ArrayList<Result> results = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_uuid")
-    private Room room;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "room_uuid")
+//    private Room room;
+
 }

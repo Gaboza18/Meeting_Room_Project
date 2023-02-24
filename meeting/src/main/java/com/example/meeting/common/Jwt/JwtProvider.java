@@ -1,5 +1,7 @@
 package com.example.meeting.common.Jwt;
 
+
+
 import com.example.meeting.common.Jwt.Dto.TokenDto;
 
 import io.jsonwebtoken.*;
@@ -20,6 +22,7 @@ public class JwtProvider {
     private final Key key;
 
     public JwtProvider(@Value("${jwt.secret}") String secretKey) {
+
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -61,6 +64,11 @@ public class JwtProvider {
     public String getUserEmail(String accessToken) {
             return Jwts.parser().setSigningKey(key).parseClaimsJws(accessToken).getBody().getSubject();
     }
+
+    //public User getUser(String accessToken) throws Exception {
+   //     String userEmail = Jwts.parser().setSigningKey(key).parseClaimsJws(accessToken).getBody().getSubject();
+   //     return userService.getUserByEmail(userEmail);
+    //}
 
     public boolean validateToken(String token) {
         try {

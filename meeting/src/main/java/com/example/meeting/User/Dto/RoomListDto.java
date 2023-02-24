@@ -1,24 +1,28 @@
 package com.example.meeting.User.Dto;
 
-
-import com.example.meeting.Room.domain.Progress;
+import com.example.meeting.Room.Dto.RoomDto;
+import com.example.meeting.User.domain.Role;
 import lombok.*;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.List;
+
 
 @Getter
+
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor
 public class RoomListDto {
 
-    private UUID uuid;
+    private String user_name;
+    private Role role;
+    private int roomListTotal;
+    private List<RoomDto> roomList;
 
-    private String room_name;
-
-    private Date  created_at;
-
-    private Progress progress;
-
+    public RoomListDto(String user_name, Role role, List<RoomDto> roomList) {
+        this.user_name = user_name;
+        this.role = role;
+        this.roomList = roomList;
+        this.roomListTotal = this.roomList.size();
+    }
 }
