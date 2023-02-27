@@ -1,6 +1,7 @@
 package com.example.meeting.User.service;
 
 import com.example.meeting.Room.Dto.RoomDto;
+import com.example.meeting.Room.domain.Progress;
 import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.RoomListDto;
 import com.example.meeting.User.Dto.SignInDto;
@@ -14,6 +15,7 @@ import com.example.meeting.common.Jwt.JwtProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -59,38 +61,45 @@ public class UserService {
         return user;
 
     }
+
+    // 사용자에 따른 전체 강좌 조회
     public String findAllUserRooms(String token) throws Exception {
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter(); // JSON 변환 하기 위한 객체 선언
 
-        //String user_uuid = jwtProvider.getUserEmail(token);
         String userEmail = jwtProvider.getUserEmail(token);
         User user = getUserByEmail(userEmail);
 
         List<Room> rooms = roomRepository.findRoomByUserUserEmail(userEmail);
-
-
         List<RoomDto> roomDtos = new ArrayList<>();
-
 
         for (Room room : rooms){
             RoomDto roomdto = new RoomDto(room);
             roomDtos.add(roomdto);
         }
 
-        RoomListDto roomListDto = new RoomListDto(user.getUserEmail(),user.getRole(),roomDtos );
+        RoomListDto roomListDto = new RoomListDto(user.getUserEmail(),user.getRole(),roomDtos);
 
         String json = ow.writeValueAsString(roomListDto);
 
         return json;
     }
 
+    // 과정에 따른 강좌 조회
+//    public String findProgressRooms(String token) throws Exception{
+//
+//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//
+//        String userEmail = jwtProvider.getUserEmail(token);
+//        User user = getUserByEmail(userEmail);
+//
+//
+//    }
+
     public User findUser(String token) throws  Exception{
-        //return jwtProvider.getUserEmail(token);
         String userEmail= jwtProvider.getUserEmail(token);
         return this.getUserByEmail(userEmail);
     }
-
 
     public String findUserEmail(String token){
         return jwtProvider.getUserEmail(resolveToken(token));
@@ -103,6 +112,4 @@ public class UserService {
         return null;
     }
 
- //   public String findUserEmail(String userToken) {
- //   }
 }

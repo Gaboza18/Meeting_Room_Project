@@ -1,0 +1,9 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ºÜ´‘ûÿÿÿÿ8ë‚¦è0
+y	java:S116"XRename this field "document_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚÓ©Øúÿÿÿÿ8ì‚¦è0
+s	java:S116*"WRename this field "QuestionList" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Şâ™š8ì‚¦è0
+c
+java:S1128"ARemove this unused import 'com.example.meeting.Room.domain.Room'.(öœÊºúÿÿÿÿ8ğ‚¦è0
+^
+java:S1128
+"<Remove this unused import 'org.hibernate.annotations.Fetch'.(”” ìşÿÿÿÿ8ğ‚¦è0

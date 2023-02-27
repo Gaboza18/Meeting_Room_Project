@@ -41,7 +41,7 @@ public class Room {
     @Builder.Default
     @Column(name = "progress")
     @Enumerated(EnumType.ORDINAL)
-    private Progress progress = Progress.BEFORE;
+    private Progress progress = Progress.PROGRESS;
 
     @Column(name = "created_at")
     private Timestamp created_at;

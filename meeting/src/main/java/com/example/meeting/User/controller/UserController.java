@@ -1,6 +1,5 @@
 package com.example.meeting.User.controller;
 
-
 import com.example.meeting.Room.domain.Room;
 import com.example.meeting.User.Dto.MainHomeDto;
 import com.example.meeting.User.Dto.SignInDto;
@@ -45,26 +44,26 @@ public class UserController {
         String savedUser = userService.createUser(signInDto);
         return ResponseEntity.ok()
                 .body(new ResponseResult<>(HttpStatus.OK.value() , savedUser));
-   }
-   @PostMapping("/signin")
+    }
+    @PostMapping("/signin")
     public ResponseEntity<ResponseResult<TokenDto>> getToken(@RequestBody SignInDto signinDto) throws Exception {
-       TokenDto tokenDto = userService.invalidProvide(signinDto);
+        TokenDto tokenDto = userService.invalidProvide(signinDto);
+        return ResponseEntity.ok()
+                .body(new ResponseResult<>(HttpStatus.OK.value() , tokenDto));
+    }
 
+    @GetMapping("/test")
+    public ResponseEntity<ResponseResult<String>> TestTokenController(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
+        return ResponseEntity.ok()
+                .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUserEmail(userToken)));
+    }
 
-       return ResponseEntity.ok()
-               .body(new ResponseResult<>(HttpStatus.OK.value() , tokenDto));
-   }
-
-   @GetMapping("/test")
-   public ResponseEntity<ResponseResult<String>> TestTokenController(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
-       return ResponseEntity.ok()
-               .body(new ResponseResult<>(HttpStatus.OK.value() , userService.findUserEmail(userToken)));
-   }
-
-   @GetMapping("/rooms")
+    @GetMapping("/rooms")
     public ResponseEntity<ResponseResult<String>> getAllUserRooms(@RequestHeader(JwtString.HEADER_STRING) String userToken) throws Exception {
         return ResponseEntity.ok()
                 .body(new ResponseResult<>(HttpStatus.OK.value(), userService.findAllUserRooms(userService.resolveToken(userToken))));
-   }
+    }
 
+    // 진행과정에 따른 강좌조회
+    // 강좌 생성
 }
